@@ -2,26 +2,33 @@
 import React from 'react'
 import Search from './Search'
 import Header from './Header'
-import { list } from '../utilities/utilities'
+import List from './List'
 import { jsx, css } from '@emotion/core'
 
-const app = css``
+const app = css`
+  .wrapper {
+    padding: 1rem;
+    max-width: 700px;
+    margin: auto;
 
-function App() {
+    p {
+      margin-bottom: 1rem;
+    }
+  }
+`
+
+const App = () => {
+  const [searchTerm, setSearchTerm] = React.useState('')
+
+  const handleChange = e => setSearchTerm(e.target.value)
+
   return (
     <div css={app}>
       <Header />
-      <Search />
-      {list.map((item) => (
-        <div key={item.objectId}>
-          <span>
-            <a href={item.url}>{item.title}</a>
-          </span>
-          <span> {item.author}</span>
-          <span> {item.num_comments}</span>
-          <span> {item.author}</span>
-        </div>
-      ))}
+      <div className='wrapper'>
+        <Search handleChange={handleChange} />
+        <List searchTerm={searchTerm} />
+      </div>
     </div>
   )
 }

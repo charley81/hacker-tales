@@ -1,4 +1,4 @@
-const list = [
+const stories = [
   {
     title: 'React',
     url: 'https://reactjs.org',
@@ -24,4 +24,4 @@ const colors = {
   lightColor: '#ffffff'
 }
 
-export { list, colors }
+export { stories, colors }

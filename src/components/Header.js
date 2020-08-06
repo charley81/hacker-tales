@@ -4,10 +4,10 @@ import { jsx, css } from '@emotion/core'
 import { colors } from '../utilities/utilities'
 
 const header = css`
-  background: red;
   padding: 1rem;
   text-align: center;
-  background: ${colors.primaryColor};
+  background: ${colors.darkColor};
+  color: ${colors.lightColor};
 `
 
 function Header() {
