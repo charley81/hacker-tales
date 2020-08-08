@@ -4,7 +4,6 @@ import { stories, colors } from '../utilities/utilities'
 import { jsx, css } from '@emotion/core'
 
 const storyList = css`
-  background: ${colors.secondaryColor};
   padding: 1rem;
   border-radius: 3px;
 
@@ -29,12 +28,12 @@ const storyList = css`
   }
 `
 
-const List = ({ searchTerm }) => (
+const List = ({ searchTerm, list }) => (
   <div css={storyList}>
     <p>
       Searching for: <strong>{searchTerm}</strong>
     </p>
-    {stories.map(item => (
+    {list.map(item => (
       <div key={item.objectId} className='story'>
         <span>
           <a href={item.url}>{item.title}</a>

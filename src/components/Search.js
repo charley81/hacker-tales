@@ -13,6 +13,9 @@ const search = css`
   input {
     padding: 0.5rem;
     width: 100%;
+    border: none;
+    border-bottom: 1px solid ${colors.darkColor};
+    margin-top: 1rem;
   }
 `
 
