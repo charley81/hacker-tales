@@ -9,12 +9,10 @@ const header = css`
   color: ${colors.lightColor};
 `
 
-function Header() {
-  return (
-    <header css={header}>
-      <h1>Hacker Stories</h1>
-    </header>
-  )
-}
+const Header = ({ title }) => (
+  <header css={header}>
+    <h1>{title}</h1>
+  </header>
+)
 
 export default Header

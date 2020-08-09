@@ -28,21 +28,17 @@ const storyList = css`
   }
 `
 
-const List = ({ searchTerm, list }) => (
+const List = ({ searchTerm, list }) =>
+  list.map(item => <Item key={item.objectID} item={item} />)
+
+const Item = ({ item }) => (
   <div css={storyList}>
-    <p>
-      Searching for: <strong>{searchTerm}</strong>
-    </p>
-    {list.map(item => (
-      <div key={item.objectId} className='story'>
-        <span>
-          <a href={item.url}>{item.title}</a>
-        </span>
-        <span> {item.author}</span>
-        <span> {item.num_comments}</span>
-        <span> {item.author}</span>
-      </div>
-    ))}
+    <span>
+      <a href={item.objectID}>{item.title}</a>
+    </span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
   </div>
 )
 

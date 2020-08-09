@@ -19,7 +19,7 @@ const app = css`
 `
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = React.useState('')
+  const [searchTerm, setSearchTerm] = React.useState('Beer')
 
   const handleChange = e => setSearchTerm(e.target.value)
 
@@ -29,10 +29,10 @@ const App = () => {
 
   return (
     <div css={app}>
-      <Header />
+      <Header title={'Hacker Stories'} />
       <div className='wrapper'>
-        <Search handleChange={handleChange} />
-        <List list={searchedStories} />
+        <Search searchTerm={searchTerm} handleChange={handleChange} />
+        <List searchTerm={searchTerm} list={searchedStories} />
       </div>
     </div>
   )

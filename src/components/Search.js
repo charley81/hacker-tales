@@ -19,13 +19,14 @@ const search = css`
   }
 `
 
-const Search = ({ handleChange }) => (
+const Search = ({ handleChange, searchTerm }) => (
   <div css={search}>
     <label>
       Search:
       <input
         type='text'
         placeholder='Enter your search'
+        value={searchTerm}
         onChange={handleChange}
       />
     </label>
