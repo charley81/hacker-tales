@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import React from 'react'
-import Search from './Search'
+import InputWithLabel from './InputWithLabel'
 import Header from './Header'
 import List from './List'
-import { stories } from '../utilities/utilities'
+import { initialStories } from '../utilities/utilities'
 import { jsx, css } from '@emotion/core'
 
 const app = css`
@@ -18,10 +18,50 @@ const app = css`
   }
 `
 
-const App = () => {
-  const [searchTerm, setSearchTerm] = React.useState('Beer')
+const useSemiPersistentState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem('key') || initialState
+  )
 
-  const handleChange = e => setSearchTerm(e.target.value)
+  React.useEffect(() => {
+    localStorage.setItem('key', value)
+  }, [value, key])
+
+  return [value, setValue]
+}
+
+const getAsyncStories = () =>
+  new Promise(resolve =>
+    setTimeout(() => resolve({ data: { stories: initialStories } }))
+  )
+
+const App = () => {
+  const [searchTerm, setSearchTerm] = useSemiPersistentState('search', 'React')
+  const [stories, setStories] = React.useState([])
+
+  React.useState([])
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [isError, setIsError] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsLoading(true)
+
+    getAsyncStories()
+      .then(result => {
+        setStories(result.data.stories)
+        setIsLoading(false)
+      })
+      .catch(() => setIsError(true))
+  }, [])
+
+  const handleRemoveStory = item => {
+    const newStories = stories.filter(story => item.objectId !== story.objectId)
+    setStories(newStories)
+  }
+
+  const handleSearch = e => {
+    setSearchTerm(e.target.value)
+  }
 
   const searchedStories = stories.filter(story =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -31,8 +71,21 @@ const App = () => {
     <div css={app}>
       <Header title={'Hacker Stories'} />
       <div className='wrapper'>
-        <Search searchTerm={searchTerm} handleChange={handleChange} />
-        <List searchTerm={searchTerm} list={searchedStories} />
+        <InputWithLabel
+          id='search'
+          value={searchTerm}
+          isFocused
+          onInputChange={handleSearch}
+        >
+          <strong>Search:</strong>
+        </InputWithLabel>
+        <hr />
+        {isError && <p>Something went wrong</p>}
+        {isLoading ? (
+          <p>Loading ...</p>
+        ) : (
+          <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+        )}
       </div>
     </div>
   )
